@@ -1,6 +1,6 @@
 .PokemonCard {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: contain;
   position: relative;
   border: 1px solid #000;
@@ -36,11 +36,26 @@
   position: relative;
   background-color: #ffffff;
   border-radius: 50%;
+  border: 0.5px solid #000000;
   margin: 30px 0px 10px;
+}
+
+.PokemonCard_content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .PokemonCard_name {
   font-size: 20px;
   font-weight: 600;
   text-transform: capitalize;
+}
+
+.PokemonCard_favorite {
+  width: 15px;
+  height: 15px;
+  margin: 0px 0px 0px 10px;
+  cursor: pointer;
 }
