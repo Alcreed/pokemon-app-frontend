@@ -5,12 +5,19 @@ import StarFavorite from '../../assets/images/star_fav.png'
 
 import './PokemonCard.css'
 
-function PokemonCard({ pokemonData, addToFavorite, favorite }) {
+function PokemonCard({ pokemonData, addToFavorite, favorite, openModalDetails }) {
   return (
-    <article className='PokemonCard'>
+    <article 
+      className='PokemonCard'
+      >
       <div className='PokemonCard_top'></div>
       <div className='PokemonCard_mid'>
-        <img className='PokemonCard_image' src={pokemonData.IMAGE} alt={pokemonData.NAME} />
+        <img 
+          className='PokemonCard_image' 
+          src={pokemonData.IMAGE} 
+          alt={pokemonData.NAME} 
+          onClick={openModalDetails}
+        />
         <div className='PokemonCard_content'>
           <p className='PokemonCard_name'>{pokemonData.NAME}</p>
           <img 
