@@ -15,6 +15,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [searchPokemon, setSearchPokemon] = useState('');
   const [viewSelected, setViewSelected] = useState('home');
+  const [favoritesIds, setFavoritesIds] = useState([]);
 
   useEffect(() => {
     fetchPokemonsData()
@@ -50,6 +51,19 @@ function Home() {
     }
   };
 
+  const favoritePokemonsList = (id) => {
+    let newFavorites = [...favoritesIds];
+
+    if (newFavorites.includes(id)) {
+      let idIndex = newFavorites.findIndex(item => item === id);
+      newFavorites.splice(idIndex, 1)
+    } else {
+      newFavorites.push(id);
+    }
+    
+    setFavoritesIds(newFavorites);
+  }
+
   if (loading) {
     return (
       <Loader />
@@ -73,10 +87,17 @@ function Home() {
           <PokemonList 
             pokemonsData = {pokemonsData}
             searchPokemon = {searchPokemon}
+            addToFavorite = {(id) => favoritePokemonsList(id)}
+            favoritesIds = {favoritesIds}
           />
         }
         {viewSelected === 'favorites' &&
-          <FavoritesList />
+          <FavoritesList 
+            pokemonsData = {pokemonsData}
+            searchPokemon = {searchPokemon}
+            addToFavorite = {(id) => favoritePokemonsList(id)}
+            favoritesIds = {favoritesIds}
+          />
         }
       </section>
     </main>

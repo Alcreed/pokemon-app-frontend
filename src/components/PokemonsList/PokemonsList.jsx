@@ -4,7 +4,7 @@ import PokemonCard from '../PokemonCard/PokemonCard';
 
 import './PokemonsList.css';
 
-function PokemonList({ pokemonsData, searchPokemon }) {
+function PokemonList({ pokemonsData, searchPokemon, addToFavorite, favoritesIds }) {
 
   const filterPokemon = (pokemon) => {
     return pokemon.NAME.toLowerCase().includes(searchPokemon.toLowerCase());
@@ -18,7 +18,9 @@ function PokemonList({ pokemonsData, searchPokemon }) {
           return (
             <PokemonCard 
               key = {pokemon.ID}
-              pokemonData = {pokemon} 
+              pokemonData = {pokemon}
+              addToFavorite = {() => addToFavorite(pokemon.ID)}
+              favorite = {favoritesIds.includes(pokemon.ID) ? true : false}
             />
           )
         })
