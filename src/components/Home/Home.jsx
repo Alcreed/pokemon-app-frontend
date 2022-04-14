@@ -25,13 +25,13 @@ function Home() {
   useEffect(() => {
     fetchPokemonsData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paginationValues.offset])
+  }, [])
 
   const fetchPokemonsData = async () => {
     try {
       setLoading(true);
-
-      let allPokemonsData = await getAllPokemonsData(paginationValues.offset, paginationValues.limit)
+      
+      let allPokemonsData = await getAllPokemonsData()
       
       setPokemonsData(allPokemonsData)
       setLoading(false);
@@ -59,6 +59,7 @@ function Home() {
       if (paginationValues.counter === 140) {
         setPaginationValues({ ...paginationValues,
           offset: paginationValues.offset + 20,
+          counter: paginationValues.counter + 20,
           limit: 10
         });
       } else {
@@ -109,6 +110,7 @@ function Home() {
             searchPokemon = {searchPokemon}
             addToFavorite = {(id) => favoritePokemonsList(id)}
             favoritesIds = {favoritesIds}
+            paginationValues = {paginationValues}
           />
         }
         {viewSelected === 'favorites' &&
@@ -120,21 +122,24 @@ function Home() {
           />
         }
       </section>
-
-      <section className='Pagination_buttons'>
-        <button 
-          className={`Pagination_button ${paginationValues.offset === 0 ? 'disabled' : ''}`}
-          onClick={paginationValues.offset !== 0 ? () => pagination('preview') : null}
-        >
-          Preview
-        </button>
-        <button 
-          className={`Pagination_button ${paginationValues.counter > 140 ? 'disabled' : ''}`}
-          onClick={paginationValues.counter <= 140 ? () => pagination('next') : null}
-        >
-          Next
-        </button>
-      </section>
+      
+      {
+        viewSelected === 'home' &&
+        <section className='Pagination_buttons'>
+          <button 
+            className={`Pagination_button ${paginationValues.offset === 0 ? 'disabled' : ''}`}
+            onClick={paginationValues.offset !== 0 ? () => pagination('preview') : null}
+          >
+            Preview
+          </button>
+          <button 
+            className={`Pagination_button ${paginationValues.counter > 140 ? 'disabled' : ''}`}
+            onClick={paginationValues.counter <= 140 ? () => pagination('next') : null}
+          >
+            Next
+          </button>
+        </section>
+      }
     </main>
   )
 }
