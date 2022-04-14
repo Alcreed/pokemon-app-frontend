@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchPokemons, fetchPokemonData } from '../../Functions'
 
 import Loader from '../Loader/Loader';
+import Navbar from '../Navbar/Navbar';
 import PokemonCard from '../PokemonCard/PokemonCard'
 
 import './Home.css'
@@ -53,6 +54,7 @@ function Home() {
 
   return (
     <main className='pokemon_app'>
+      <Navbar />
       <section className='pokemons_content'>
         {
           pokemonsData?.length > 0 &&
