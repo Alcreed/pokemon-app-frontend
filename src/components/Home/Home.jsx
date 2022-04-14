@@ -4,7 +4,8 @@ import { fetchPokemons, fetchPokemonData } from '../../Functions'
 import Loader from '../Loader/Loader';
 import Navbar from '../Navbar/Navbar';
 import SearchBar from '../SearchBar/SearchBar';
-import PokemonCard from '../PokemonCard/PokemonCard';
+import PokemonList from '../PokemonsList/PokemonsList';
+import FavoritesList from '../FavoritesList/FavoritesList';
 
 import './Home.css'
 
@@ -13,6 +14,7 @@ function Home() {
   const [pokemonsData, setPokemonsData] = useState([])
   const [loading, setLoading] = useState(false);
   const [searchPokemon, setSearchPokemon] = useState('');
+  const [viewSelected, setViewSelected] = useState('home');
 
   useEffect(() => {
     fetchPokemonsData()
@@ -48,10 +50,6 @@ function Home() {
     }
   };
 
-  const filterPokemon = (pokemon) => {
-    return pokemon.NAME.toLowerCase().includes(searchPokemon.toLowerCase());
-  };
-
   if (loading) {
     return (
       <Loader />
@@ -60,7 +58,10 @@ function Home() {
 
   return (
     <main className='pokemon_app'>
-      <Navbar />
+      <Navbar 
+        onChangeView = {(view) => setViewSelected(view)}
+        viewSelected = {viewSelected}
+      />
 
       <SearchBar
         pokemonName = {searchPokemon}
@@ -68,16 +69,14 @@ function Home() {
       />
       
       <section className='pokemons_content'>
-        {
-          pokemonsData?.length > 0 &&
-          pokemonsData.filter(pokemon => filterPokemon(pokemon)).map(pokemon => {
-            return (
-              <PokemonCard 
-                key = {pokemon.ID}
-                pokemonData = {pokemon} 
-              />
-            )
-          })
+        {viewSelected === 'home' &&
+          <PokemonList 
+            pokemonsData = {pokemonsData}
+            searchPokemon = {searchPokemon}
+          />
+        }
+        {viewSelected === 'favorites' &&
+          <FavoritesList />
         }
       </section>
     </main>

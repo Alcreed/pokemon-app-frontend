@@ -40,6 +40,10 @@
   cursor: pointer;
 }
 
+.Navbar_option.selected {
+  border-bottom: 3px solid #ffcb05;
+}
+
 .Navbar_option:hover {
   border-bottom: 3px solid #ffcb05;
 }
