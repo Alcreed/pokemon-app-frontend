@@ -3,7 +3,8 @@ import { fetchPokemons, fetchPokemonData } from '../../Functions'
 
 import Loader from '../Loader/Loader';
 import Navbar from '../Navbar/Navbar';
-import PokemonCard from '../PokemonCard/PokemonCard'
+import SearchBar from '../SearchBar/SearchBar';
+import PokemonCard from '../PokemonCard/PokemonCard';
 
 import './Home.css'
 
@@ -11,6 +12,7 @@ function Home() {
 
   const [pokemonsData, setPokemonsData] = useState([])
   const [loading, setLoading] = useState(false);
+  const [searchPokemon, setSearchPokemon] = useState('');
 
   useEffect(() => {
     fetchPokemonsData()
@@ -46,6 +48,10 @@ function Home() {
     }
   };
 
+  const filterPokemon = (pokemon) => {
+    return pokemon.NAME.toLowerCase().includes(searchPokemon.toLowerCase());
+  };
+
   if (loading) {
     return (
       <Loader />
@@ -55,10 +61,16 @@ function Home() {
   return (
     <main className='pokemon_app'>
       <Navbar />
+
+      <SearchBar
+        pokemonName = {searchPokemon}
+        searchPokemon = {(value) => setSearchPokemon(value)} 
+      />
+      
       <section className='pokemons_content'>
         {
           pokemonsData?.length > 0 &&
-          pokemonsData.map(pokemon => {
+          pokemonsData.filter(pokemon => filterPokemon(pokemon)).map(pokemon => {
             return (
               <PokemonCard 
                 key = {pokemon.ID}
