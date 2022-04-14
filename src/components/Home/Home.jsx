@@ -16,15 +16,22 @@ function Home() {
   const [searchPokemon, setSearchPokemon] = useState('');
   const [viewSelected, setViewSelected] = useState('home');
   const [favoritesIds, setFavoritesIds] = useState([]);
+  const [paginationValues, setPaginationValues] = useState({
+    offset: 0,
+    limit: 20,
+    counter: 20
+  })
 
   useEffect(() => {
     fetchPokemonsData()
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paginationValues.offset])
 
   const fetchPokemonsData = async () => {
     try {
       setLoading(true);
-      let allPokemonsData = await fetchPokemons()
+
+      let allPokemonsData = await fetchPokemons(paginationValues.offset, paginationValues.limit)
   
       let pokemons = await Promise.all(allPokemonsData.results.map(async pokemon => {
         let pokemonData = await fetchPokemonData(pokemon.url);
@@ -64,6 +71,36 @@ function Home() {
     setFavoritesIds(newFavorites);
   }
 
+  const pagination = (type) => {
+    if (type === 'next') {
+      if (paginationValues.counter === 140) {
+        setPaginationValues({ ...paginationValues,
+          offset: paginationValues.offset + 20,
+          limit: 10
+        });
+      } else {
+        setPaginationValues({ ...paginationValues,
+          offset: paginationValues.offset + 20,
+          counter: paginationValues.counter + 20
+        });
+      }
+    } else {
+      if (paginationValues.offset > 0) {
+        setPaginationValues({ ...paginationValues,
+          offset: paginationValues.offset - 20,
+          counter: paginationValues.counter - 20
+        });
+      }
+      if (paginationValues.limit === 10) {
+        setPaginationValues({ ...paginationValues,
+          offset: paginationValues.offset - 20,
+          limit: 20,
+          counter: paginationValues.counter - 20
+        });
+      }
+    }
+  }
+
   if (loading) {
     return (
       <Loader />
@@ -99,6 +136,21 @@ function Home() {
             favoritesIds = {favoritesIds}
           />
         }
+      </section>
+
+      <section className='Pagination_buttons'>
+        <button 
+          className={`Pagination_button ${paginationValues.offset === 0 ? 'disabled' : ''}`}
+          onClick={paginationValues.offset !== 0 ? () => pagination('preview') : null}
+        >
+          Preview
+        </button>
+        <button 
+          className={`Pagination_button ${paginationValues.counter > 140 ? 'disabled' : ''}`}
+          onClick={paginationValues.counter <= 140 ? () => pagination('next') : null}
+        >
+          Next
+        </button>
       </section>
     </main>
   )
