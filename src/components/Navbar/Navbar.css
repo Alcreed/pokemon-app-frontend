@@ -54,9 +54,27 @@
   align-items: center;
   position: relative;
   grid-column: 6 / 7;
+  cursor: pointer;
 }
 
 .Navbar_profile_image {
   width: 60px;
 }
+
+.SignOut_option {
+  width: auto;
+  position: absolute;
+  top: 117%;
+  right: 0;
+  background-color: #203d76;
+  border-radius: 0px 0px 9px 9px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.SignOut_text {
+  font-size: 17px;
+  color: #ffffff;
+}
+
 

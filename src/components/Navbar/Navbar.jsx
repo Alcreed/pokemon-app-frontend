@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Cookies from "universal-cookie";
 
 import LogoPokemon from '../../assets/images/logo_pokemon.webp'
 import UserAvatar from '../../assets/images/user.png'
@@ -6,6 +7,15 @@ import UserAvatar from '../../assets/images/user.png'
 import './Navbar.css';
 
 function Navbar({ onChangeView, viewSelected }) {
+  
+  const cookies = new Cookies();
+  const [showSignOut, setShowSignOut] = useState(false);
+
+  const signOut = () => {
+    cookies.remove('email', {path: '/'});
+    window.location.href="./"
+  }
+
   return (
     <header className="Pokemon_navbar">
       <nav className="Pokemon_navbar_content">
@@ -25,7 +35,18 @@ function Navbar({ onChangeView, viewSelected }) {
           </li>
         </ul>
         <div className="Pokemon_navbar_profile">
-          <img className="Navbar_profile_image" src={UserAvatar} alt="" />
+          <img 
+            className="Navbar_profile_image" 
+            src={UserAvatar} 
+            alt="Avatar" 
+            onClick={() => setShowSignOut(!showSignOut)} 
+          />
+          {
+            showSignOut &&
+            <div className="SignOut_option" onClick={() => signOut()}>
+              <p className="SignOut_text">Sign out</p>
+            </div>
+          }
         </div>
       </nav>
     </header>

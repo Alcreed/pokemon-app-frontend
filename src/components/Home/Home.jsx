@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPokemonsData } from '../../Functions'
+import Cookies from 'universal-cookie';
 
 import Loader from '../Loader/Loader';
 import Navbar from '../Navbar/Navbar';
@@ -12,6 +13,7 @@ import './Home.css'
 
 function Home() {
 
+  const cookies = new Cookies();
   const [pokemonsData, setPokemonsData] = useState([])
   const [loading, setLoading] = useState(false);
   const [searchPokemon, setSearchPokemon] = useState('');
@@ -27,6 +29,13 @@ function Home() {
 
   useEffect(() => {
     fetchPokemonsData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (!cookies.get('email')) {
+      window.location.href = "./"
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
