@@ -36,6 +36,11 @@ function Home() {
     if (!cookies.get('email')) {
       window.location.href = "./"
     }
+
+    if (cookies.get('favorites')) {
+      let favorites = cookies.get('favorites')
+      setFavoritesIds(favorites);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -64,6 +69,8 @@ function Home() {
     }
     
     setFavoritesIds(newFavorites);
+
+    cookies.set('favorites', newFavorites, {path: '/home'});
   }
 
   const pagination = (type) => {

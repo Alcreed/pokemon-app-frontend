@@ -13,6 +13,7 @@ function Navbar({ onChangeView, viewSelected }) {
 
   const signOut = () => {
     cookies.remove('email', {path: '/'});
+    cookies.remove('favorites', {path: '/home'});
     window.location.href="./"
   }
 
