@@ -1,6 +1,6 @@
 # Login information (email and password)
 
-The login of this project use the email = test57Blocks@mail.com and the password = pwd1234
+The login of this project use the email = test57Blocks@mail.com and the password = pwd1234.\
 This project works with a backend repository located in https://github.com/Alcreed/pokemon-app-backend
 
 # Getting Started with Create React App
